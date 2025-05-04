@@ -6,8 +6,15 @@ if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     exit 1
 fi
 
-# Add all changes
-git add .
+# Check if there are any changes
+if git diff-index --quiet HEAD -- && [ -z "$(git status --porcelain)" ]; then
+    # No changes, create/update a timestamp file
+    echo "Timestamp: $(date)" > .last_commit_timestamp
+    git add .last_commit_timestamp
+else
+    # Add all changes
+    git add .
+fi
 
 # Get commit message from user (or use default)
 if [ -z "$1" ]; then

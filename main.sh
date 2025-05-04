@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ~/projects/top-secret
+
 # Check if we're in a git repository
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     echo "Error: Not in a git repository"

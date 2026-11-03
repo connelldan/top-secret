@@ -140,9 +140,10 @@ def run_scheduler(force=False, dry_run=False):
     if force:
         log("Forcing commit right now...")
         if make_commit(now, dry_run=dry_run):
-            iso_now = now.isoformat()
-            state["executed_times"].append(iso_now)
-            save_state(state)
+            if not dry_run:
+                iso_now = now.isoformat()
+                state["executed_times"].append(iso_now)
+                save_state(state)
         return
 
     planned_times = state.get("planned_times", [])
@@ -165,8 +166,9 @@ def run_scheduler(force=False, dry_run=False):
     target_iso = due[0]
     log(f"Commit due (scheduled for {datetime.fromisoformat(target_iso).strftime('%H:%M:%S')}). Executing...")
     if make_commit(now, dry_run=dry_run):
-        state["executed_times"].append(target_iso)
-        save_state(state)
+        if not dry_run:
+            state["executed_times"].append(target_iso)
+            save_state(state)
 
 def main():
     parser = argparse.ArgumentParser(description="Git Autocommit Scheduler")

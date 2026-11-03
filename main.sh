@@ -20,7 +20,7 @@ fi
 
 # Get commit message from user (or use default)
 if [ -z "$1" ]; then
-    COMMIT_MSG="Update: $(date)"
+    COMMIT_MSG="Auto-commit: $(date)"
 else
     COMMIT_MSG="$1"
 fi
